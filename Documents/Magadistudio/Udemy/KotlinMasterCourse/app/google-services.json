@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "674702095672",
+    "firebase_url": "https://kotlin-whatsupclone-test.firebaseio.com",
+    "project_id": "kotlin-whatsupclone-test",
+    "storage_bucket": "kotlin-whatsupclone-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674702095672:android:4322bdad8e328f3d",
+        "android_client_info": {
+          "package_name": "chatapp.gohool.com.whatsup_cloneapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674702095672-7hoeeqfpd1vejnn3qk2g7i2cshtdciuq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "chatapp.gohool.com.whatsup_cloneapp",
+            "certificate_hash": "b32ffed495a7c4b5e4e42298b96ccebc4d33bec0"
+          }
+        },
+        {
+          "client_id": "674702095672-d1mqkcrmjr5hc5gvn3jso3u0rq3hnvhb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4gX5BOJ4mnqACZxWATMwLmJRXG-7UJI4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674702095672-d1mqkcrmjr5hc5gvn3jso3u0rq3hnvhb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

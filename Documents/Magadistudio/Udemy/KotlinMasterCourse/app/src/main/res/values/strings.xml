@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Whatsup-Clone App</string>
+    <string name="welcome">Welcome to WhatsUp Clone!</string>
+    <string name="login_text">Login to Your Account</string>
+    <string name="email">Your Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="create_account">Create a New Account</string>
+    <string name="display_name">Display Name</string>
+    <string name="create_act">Create Account</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="request_frag">Request Fragment</string>
+    <string name="chat_frag">Chat Fragment</string>
+    <string name="friends_frag">Friends Fragment</string>
+    <string name="update_status">Enter your Status</string>
+</resources>
