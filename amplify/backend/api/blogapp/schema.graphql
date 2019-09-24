@@ -1,0 +1,6 @@
+type Post @model {
+    id: ID!
+    title: String!
+    body:String!
+    createdAt:String!
+}
