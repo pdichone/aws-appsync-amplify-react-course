@@ -1,3 +1,41 @@
+Important:
+Here's the schema which you'll need to generate the API with Amplifly CLI.
+
+type Post @model{
+   id: ID!
+   postOwnerId: String!
+   postOwnerUsername: String!
+   postTitle: String!
+   postBody: String!
+   createdAt: String
+   comments: [Comment] @connection(name: "PostComments") #relationship
+   likes: [Like] @connection(name: "PostLikes")
+  
+}
+ 
+type Comment @model {
+   id: ID!
+   commentOwnerId: String!
+   commentOwnerUsername: String!
+   post: Post @connection(name: "PostComments")
+   content: String!
+   createdAt: String!
+ 
+}
+ 
+type Like @model {
+   id: ID!
+   numberLikes: Int!
+   likeOwnerId: String!
+   likeOwnerUsername: String!
+   post: Post @connection(name: "PostLikes")
+}
+
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
