@@ -1,15 +1,50 @@
 import React, { Component } from 'react'
 import { updatePost } from '../graphql/mutations'
-import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
+import { API, graphqlOperation } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 
 class EditPost extends Component {
+
     state = {
         show: false,
+        id: "",
+        postOwnerId: '',
+        postOwnerUsername: '',
+        likeOwnerUsername: '',
+        likeOwnerId: '',
+        numberLikes: 0,
+        postTitle: "",
+        postBody: "",
         postData: {
-            title: this.props.title,
-            body: this.props.body
+            postTitle: this.props.postTitle,
+            postBody: this.props.postBody
         }
+
+    }
+
+    componentDidMount = async () => {
+        // Get the current authenticated user
+
+        //     Auth.currentUserInfo()
+        //   .then(res => {
+        //     console.log(res);
+        //   })
+        //   .catch(err => {
+        //     console.error(err);
+        //   });
+
+        await Auth.currentUserInfo()
+            .then(user => {
+                // console.log("stuff: ", JSON.stringify(user))
+                this.setState(
+                    {
+                        postOwnerUsername: user.username,
+                        postOwnerId: user.attributes.sub,
+                        likeOwnerUsername: user.username,
+                        likeOwnerId: user.attributes.sub
+                    }
+                )
+            })
     }
 
     handleModal = () => {
@@ -18,69 +53,81 @@ class EditPost extends Component {
         document.documentElement.scrollTop = 0
     }
 
-    handleSubmit = (e, updatePost) => {
-         e.preventDefault()
-         updatePost({
-             variables: {
-                 input: {
-                     id: this.props.id,
-                     title: this.state.postData.title,
-                     body: this.state.postData.body
-                 }
-             }
-         }).then(res => this.handleModal())
+    handleUpdatePost = async (event) => {
+
+        event.preventDefault();
+        //  const { id, post } = this.state
+
+        const input = {
+            id: this.props.id,
+            postOwnerId: this.state.postOwnerId, // Todo: will add id automatically later
+            postOwnerUsername: this.state.postOwnerUsername,
+            postTitle: this.state.postData.postTitle,
+            postBody: this.state.postData.postBody
+            //createdAt: new Date().toISOString()
+        }
+
+        await API.graphql(graphqlOperation(updatePost, { input }))
+        //console.log("UPdATE: ", JSON.stringify(result))
+
+        //force closing the modal
+        this.setState({ show: !this.state.show })
+
     }
 
-    handleTitle = e => {
+    handleTitle = event => {
         this.setState({
-            postData: { ...this.state.postData, title: e.target.value } })
-
+            postData: { ...this.state.postData, postTitle: event.target.value }
+        })
     }
-
-    handleBody = e => {
-        this.setState({
-            postData: { ...this.state.postData, body: e.target.value}})
-
+    handleBody = event => {
+        this.setState({ postData: { ...this.state.postData, postBody: event.target.value } })
     }
+    render() {
+        return (
+            <>
+                {this.state.show && (
+                    <div className="modal">
+                        <button className="close" onClick={this.handleModal}>
+                            X
+                </button>
 
-  render() {
-       return (
-        <>
-        {this.state.show && (
-          <div className="modal">
-            <button className="close" onClick={this.handleModal}>
-              X
-            </button>
-            <Mutation mutation={gql(updatePost)}>
-              {updatePost => {
-                return (
-                  <form
-                    className="add-post"
-                    onSubmit={e => this.handleSubmit(e, updatePost)}
-                  >
-                    <input
-                      type="text"
-                      required
-                      value={this.state.postData.title}
-                      onChange={this.handleTitle}
-                    />
-                    <textarea
-                      rows="3"
-                      cols="40"
-                      required
-                      value={this.state.postData.body}
-                      onChange={this.handleBody}
-                    />
-                    <button>Update Post</button>
-                  </form>
-                );
-              }}
-            </Mutation>
-          </div>
-        )}
-        <button onClick={this.handleModal}>Edit</button>
-      </>
-       )
-  }
+                        <form className="add-post"
+                            onSubmit={(event) => this.handleUpdatePost(event)}>
+                            <input
+                                style={{ fontSize: '19px' }}
+                                type="text" placeholder="Title"
+                                name="postTitle"
+                                value={this.state.postData.postTitle}
+                                onChange={this.handleTitle}
+
+                            />
+
+                            {/* <textarea 
+                          style={{height:'150px', width: '240px', fontSize: '19px'}}
+                          type="text"
+                          name="postBody"
+                          required
+                          value={this.state.postData.postBody}
+                           onChange={this.handleBody}
+                          /> */}
+
+                            <input
+                                style={{ height: '150px', fontSize: '19px' }}
+                                type="text"
+                                name="postBody"
+                                //placeholder="Post your thought"
+                                value={this.state.postData.postBody}
+                                onChange={this.handleBody}
+
+                            />
+                            <button>Update Post</button>
+                        </form>
+                    </div>
+                )}
+                <button onClick={this.handleModal}>Edit</button>
+            </>
+        )
+    }
 }
-export default EditPost
+export default EditPost;
