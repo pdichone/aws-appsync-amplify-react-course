@@ -1,23 +1,14 @@
 {
-  "name": "blogapp",
+  "name": "blogfinal",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/react": "^16.9.1",
-    "apollo-client": "^2.6.4",
-    "apollo-link": "^1.2.12",
-    "aws-amplify": "^1.1.36",
-    "aws-amplify-react": "^2.3.12",
-    "aws-appsync": "^1.8.1",
-    "graphql": "^14.4.2",
-    "graphql-tag": "^2.10.1",
+    "aws-amplify": "^1.1.40",
+    "aws-amplify-react": "^2.4.4",
     "react": "^16.9.0",
-    "react-apollo": "^2.5.8",
     "react-dom": "^16.9.0",
+    "react-icons": "^3.7.0",
     "react-scripts": "3.1.1"
-  },
-  "resolutions": {
-    "apollo-client": "2.6.3"
   },
   "scripts": {
     "start": "react-scripts start",
