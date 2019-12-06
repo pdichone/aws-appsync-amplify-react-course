@@ -1,4 +1,4 @@
-type Post @model{
+type Post @model{ 
    id: ID!
    postOwnerId: String!
    postOwnerUsername: String!
@@ -9,6 +9,7 @@ type Post @model{
    likes: [Like] @connection(name: "PostLikes")
   
 }
+
  
 type Comment @model {
    id: ID!
