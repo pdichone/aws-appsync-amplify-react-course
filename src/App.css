@@ -89,10 +89,23 @@ input[type=submit]:hover {
    box-shadow: 4px 4px 4px rgb(114, 116, 114);
    animation: move .2s backwards;
 }
+.modal-likes{
+  position: absolute;
+  top:40px;
+  right: 200px;
+  width: 60%;
+  height: 40%;
+  box-shadow: 4px 4px 4px rgb(114, 116, 114);
+  animation: move .2s backwards;
+}
 div {
   border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
+}
+ .clean-area  {
+  border-radius: 0px;
+  background-color: #45a049;
 }
 .btn-delete {
   display: inline-block;
@@ -143,6 +156,29 @@ button{
   font-size: 1rem;
   cursor: pointer;
   margin-top: 15px;
+}
+
+.users-liked {
+  width: 100px;
+  color: #282c34;
+  border: none;
+  background-color: "gray";
+  padding: 2px;
+}
+.alert {
+   font-weight: 200;
+  color: crimson;
+  font-style: italic;
+  font-size: 14px;
+}
+.like-button {
+   font-weight: 600;
+   border-radius: 6;
+   padding: "8px";
+   color: rgb(80, 82, 80);
+   width: "40px";
+   font-style: italic;
+   cursor: pointer;
 }
 
 
