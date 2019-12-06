@@ -1,90 +1,91 @@
-import React, { Component } from "react";
-import { API, graphqlOperation } from 'aws-amplify'
-import { createPost } from '../graphql/mutations';
-import { Auth } from 'aws-amplify';
+import React, { Component } from 'react'
+import { API, graphqlOperation, Auth } from 'aws-amplify'
+import { createPost } from '../graphql/mutations'
 
 
 
 
 class CreatePost extends Component {
 
-  state = {
+    state = {
+        postOwnerId: "",
+        postOwnerUsername: "",
+        postTitle: "",
+        postBody: ""
+    }
 
-    postOwnerId: '',
-    postOwnerUsername: '',
-    numberLikes: 0,
-    postTitle: "",
-    postBody: "",
-  }
+    componentDidMount = async () => {
+       //Todo: Auth
+       await Auth.currentUserInfo()
+            .then(user => {
+                this.setState({
+                      postOwnerId: user.attributes.sub,
+                      postOwnerUsername: user.username
 
-  componentDidMount = async () => {
+                })
 
-    await Auth.currentUserInfo()
-      .then(user => {
-        this.setState(
-          {
-            postOwnerUsername: user.username,
-            postOwnerId: user.attributes.sub,
-          }
-        )
-      })
-  }
 
-  handleChangePost = event => this.setState({ [event.target.name]: event.target.value })
-
-  handleAddPost = async event => {
-
-    event.preventDefault()
-
-    const input = {
-      postOwnerId: this.state.postOwnerId, // Todo: will add id automatically later
-      postOwnerUsername: this.state.postOwnerUsername,
-      postTitle: this.state.postTitle,
-      postBody: this.state.postBody,
-      createdAt: new Date().toISOString(),
+                // console.log("Curr: User: ", user.username);
+                 //console.log("Attr.Sub: User: ", user.attributes.sub);
+                 
+            })
     }
 
 
-    await API.graphql(graphqlOperation(createPost, { input }))
+    handleChangePost = event => this.setState({
+         [event.target.name] : event.target.value 
+         })
 
-    this.setState({ postTitle: "", postBody: "" })// clear fields
-  }
+    handleAddPost = async event => {
+         event.preventDefault()
 
-  render() {
-    return (
-      <div>
+         const input = {
+              postOwnerId: this.state.postOwnerId,
+              postOwnerUsername: this.state.postOwnerUsername,
+              postTitle: this.state.postTitle,
+              postBody: this.state.postBody,
+              createdAt: new Date().toISOString()
+         }
 
-        <form className="add-post"
-          onSubmit={this.handleAddPost}>
+         await API.graphql(graphqlOperation(createPost, { input }))
 
-          <input
-            style={{ fontSize: '19px' }}
-            type="text" placeholder="Title"
-            name="postTitle"
-            required
-            value={this.state.postTitle}
-            onChange={this.handleChangePost}
+         this.setState({ postTitle: "", postBody: ""})
 
-          />
 
-          <textarea
-            type="text"
-            name="postBody"
-            rows="3"
-            cols="40"
-            required
-            placeholder="Post your thought"
-            value={this.state.postBody}
-            onChange={this.handleChangePost}
-          />
-          <input type="submit"
-            className="btn"
-            style={{ fontSize: '19px' }} />
+    }
 
-        </form>
 
-      </div>
-    )
-  }
+    render() {
+        return (
+            <form className="add-post" 
+            onSubmit={this.handleAddPost} >
+
+                <input style={{ font: '19px'}} 
+                  type="text" placeholder="Title"
+                  name="postTitle"
+                  required
+                  value={this.state.postTitle}
+                  onChange={this.handleChangePost}
+                  />
+
+                <textarea 
+                  type="text"
+                  name="postBody"
+                  rows="3"
+                  cols="40"
+                  required
+                  placeholder="New Blog Post"
+                  value={this.state.postBody}
+                  onChange={this.handleChangePost}
+                  />
+
+                <input  type="submit"
+                  className="btn"
+                  style={{ fontSize: '19px'}}/>
+
+
+            </form>
+        )
+    }
 }
 export default CreatePost;
