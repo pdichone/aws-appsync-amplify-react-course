@@ -63,7 +63,7 @@ class DisplayPosts extends Component {
                      next: postData => {
                           const { posts } = this.state
                           const updatePost = postData.value.data.onUpdatePost
-                          const index = posts.findIndex(post => post.id === updatePost)
+                          const index = posts.findIndex(post => post.id === updatePost.id) //had forgotten to say updatePost.id!
                           const updatePosts = [
                               ...posts.slice(0, index),
                              updatePost,
